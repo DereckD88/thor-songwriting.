@@ -1,0 +1,1033 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<meta name="theme-color" content="#10101b">
+
+<title>Thor — AI Songwriting Studio</title>
+
+<style>
+
+:root {
+
+  --bg:#0d0d16; --panel:#171725; --panel2:#202033;
+
+  --text:#f5f3ff; --muted:#a5a2bc; --accent:#b69cff;
+
+  --orange:#ffb66d; --border:#333149; --green:#80e2b3;
+
+}
+
+*{box-sizing:border-box}
+
+body{
+
+  margin:0;background:radial-gradient(ellipse at top,#24203c 0,#0d0d16 55%);
+
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  min-height:100vh;
+
+}
+
+button,input,textarea,select{font:inherit}
+
+button{cursor:pointer}
+
+.app{max-width:1100px;margin:auto;padding:20px 14px 50px}
+
+header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+
+.logo{
+
+  width:50px;height:50px;border-radius:16px;display:grid;place-items:center;
+
+  font-size:27px;background:linear-gradient(135deg,#c3a3ff,#ffb66d);
+
+  color:#191324;font-weight:900;box-shadow:0 5px 25px #9d7bff33;
+
+}
+
+.brand h1{margin:0;font-size:25px;letter-spacing:-1px}
+
+.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
+
+.status{margin-left:auto;color:var(--green);font-size:11px}
+
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:15px}
+
+.panel{background:#171725ed;border:1px solid var(--border);border-radius:19px;padding:16px;min-width:0}
+
+h2{font-size:15px;margin:0 0 14px}
+
+h3{font-size:13px;margin:0 0 10px}
+
+label{display:block;color:var(--muted);font-size:12px;margin:13px 0 6px}
+
+input,textarea,select{
+
+  width:100%;border:1px solid var(--border);border-radius:11px;
+
+  background:#10101b;color:var(--text);padding:11px;outline:none;
+
+}
+
+input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+
+textarea{resize:vertical;min-height:80px;line-height:1.5}
+
+button{
+
+  border:1px solid var(--border);background:var(--panel2);color:var(--text);
+
+  padding:10px 12px;border-radius:11px;font-weight:600;font-size:12px;
+
+}
+
+button:hover{filter:brightness(1.15)}
+
+.primary{background:linear-gradient(120deg,#c2a5ff,#f4b7d5);color:#20152c;border:0}
+
+.wide{width:100%;margin-top:14px}
+
+.small{padding:7px 9px;font-size:11px}
+
+.muted{color:var(--muted);font-size:12px;line-height:1.6}
+
+.saved-list{display:grid;gap:7px;margin-top:12px}
+
+.saved-item{
+
+  width:100%;text-align:left;overflow-wrap:anywhere;
+
+  font-weight:500;background:#10101b;
+
+}
+
+.saved-item.active{border-color:var(--accent);background:#29233c}
+
+.saved-item small{display:block;color:var(--muted);margin-top:4px}
+
+.main{display:flex;flex-direction:column;gap:14px}
+
+.hero{padding:18px}
+
+.hero h2{font-size:21px;margin-bottom:6px}
+
+.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+
+.chip{border-radius:20px;font-size:11px;padding:8px 10px}
+
+.chat{display:flex;flex-direction:column;gap:12px}
+
+.message{max-width:94%;border-radius:15px;padding:12px 14px;font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+
+.bot{background:#222137;border:1px solid #39334f;align-self:flex-start}
+
+.user{background:#4b386c;align-self:flex-end}
+
+.message strong{color:var(--orange)}
+
+.chat-box{display:flex;gap:8px;align-items:flex-end}
+
+.chat-box textarea{min-height:48px;max-height:150px}
+
+.chat-box button{min-height:46px}
+
+.output-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+.output-head h2{margin:0}
+
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+
+.lyrics{
+
+  min-height:200px;max-height:520px;overflow:auto;white-space:pre-wrap;
+
+  overflow-wrap:anywhere;background:#10101b;border:1px solid var(--border);
+
+  border-radius:13px;padding:16px;font-size:14px;line-height:1.9;
+
+}
+
+.lyrics:empty:before{content:"Your lyrics will appear here...";color:#77738c}
+
+.notice{font-size:11px;color:var(--muted);line-height:1.6;margin-top:14px}
+
+footer{text-align:center;color:#77738c;font-size:11px;margin-top:22px}
+
+@media(max-width:700px){
+
+ .layout{grid-template-columns:1fr}
+
+ .sidebar{order:2}.main{order:1}
+
+ .app{padding:14px 10px 35px}
+
+ .panel{padding:14px}
+
+ .status{font-size:10px}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+  <div class="logo">ϟ</div>
+
+  <div class="brand">
+
+    <h1>THOR <span style="color:var(--accent)">STUDIO</span></h1>
+
+    <p>Your songwriting room. Your sound. Your stories.</p>
+
+  </div>
+
+  <div class="status">● LOCAL MODE</div>
+
+</header>
+
+<div class="layout">
+
+<aside class="sidebar panel">
+
+  <h2>Song settings</h2>
+
+  <label for="title">Song title or working title</label>
+
+  <input id="title" placeholder="Midnight Confessions">
+
+  <label for="genre">Genre</label>
+
+  <select id="genre">
+
+    <option>Country</option><option>Country Rock</option>
+
+    <option>Rap / Hip-Hop</option><option>R&B / Soul</option>
+
+    <option>Pop</option><option>Rock</option><option>Metal</option>
+
+    <option>Blues</option><option>Gospel</option><option>Folk</option>
+
+    <option>EDM / Dance</option><option>Indie</option><option>Jazz</option>
+
+    <option>Reggae</option><option>Alternative</option><option>Comedy</option>
+
+  </select>
+
+  <label for="mood">Mood</label>
+
+  <select id="mood">
+
+    <option>Emotional</option><option>Dark</option><option>Romantic</option>
+
+    <option>Angry</option><option>Confident</option><option>Funny</option>
+
+    <option>Sexy and sensual</option><option>Heartbroken</option>
+
+    <option>Hopeful</option><option>Rebellious</option><option>Party</option>
+
+    <option>Nostalgic</option><option>Chill</option><option>Inspirational</option>
+
+  </select>
+
+  <label for="voice">Vocal style</label>
+
+  <select id="voice">
+
+    <option>Male vocalist</option><option>Female vocalist</option>
+
+    <option>Duet</option><option>Rap vocal</option>
+
+    <option>Deep gritty vocal</option><option>Soft intimate vocal</option>
+
+    <option>Powerful belting vocal</option><option>Any vocal style</option>
+
+  </select>
+
+  <label for="structure">Song structure</label>
+
+  <select id="structure">
+
+    <option>Full song</option><option>Verse / Chorus / Verse / Chorus / Bridge / Chorus</option>
+
+    <option>Verse / Chorus / Verse / Chorus</option>
+
+    <option>Intro / Verse / Chorus / Verse / Chorus / Outro</option>
+
+    <option>Freestyle</option>
+
+  </select>
+
+  <label for="intensity">Lyrical intensity</label>
+
+  <select id="intensity">
+
+    <option>Radio friendly</option><option>Raw and honest</option>
+
+    <option>Explicit language</option><option>Mature adult themes</option>
+
+  </select>
+
+  <label for="topic">Song idea</label>
+
+  <textarea id="topic" placeholder="Tell Thor what the song is about. Add characters, a story, a phrase, or a feeling..."></textarea>
+
+  <button class="primary wide" id="generate">ϟ Generate song</button>
+
+  <button class="wide" id="clear">New blank song</button>
+
+  <p class="notice">Your drafts are stored in this browser on this device. They are not synced to an account.</p>
+
+  <h2 style="margin-top:24px">Saved songs</h2>
+
+  <div id="saved" class="saved-list"></div>
+
+</aside>
+
+<main class="main">
+
+  <section class="panel hero">
+
+    <h2>What's the story, songwriter?</h2>
+
+    <p>Start with a feeling, a line, a wild idea, or a whole story. Develop it into lyrics, experiment with hooks, and find your sound.</p>
+
+    <div class="chips">
+
+      <button class="chip" data-prompt="Write a heartbreaking country song about the one who got away.">💔 Heartbreak</button>
+
+      <button class="chip" data-prompt="Write a funny, rebellious song with clever punchlines.">😈 Comedy</button>
+
+      <button class="chip" data-prompt="Write a sensual, mature love song about two consenting adults.">🌙 Sensual</button>
+
+      <button class="chip" data-prompt="Write an aggressive rap with internal rhymes and confidence.">🎤 Rap</button>
+
+      <button class="chip" data-prompt="Write an uplifting song about surviving hard times.">⚡ Comeback</button>
+
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>Songwriting chat</h2>
+
+    <div id="chat" class="chat" aria-live="polite">
+
+      <div class="message bot">Hey, I'm Thor. ⚡ Tell me your idea, and we'll shape it into a song. You can ask me to write lyrics, improve a hook, change the mood, rewrite a verse, or try a different genre. What are we creating?</div>
+
+    </div>
+
+    <div class="chat-box" style="margin-top:14px">
+
+      <textarea id="prompt" placeholder="Tell Thor what to write or change..." rows="2"></textarea>
+
+      <button class="primary" id="send">Send ↗</button>
+
+    </div>
+
+    <p class="notice">Tip: Try “rewrite the chorus,” “make it darker,” “give me better rhymes,” or “write verse two.”</p>
+
+  </section>
+
+  <section class="panel">
+
+    <div class="output-head">
+
+      <h2>Lyrics workspace</h2>
+
+      <div class="actions">
+
+        <button class="small" id="copy">Copy lyrics</button>
+
+        <button class="small" id="download">Download .txt</button>
+
+        <button class="small" id="save">Save song</button>
+
+      </div>
+
+    </div>
+
+    <label for="lyrics">Edit anything directly in the lyrics below</label>
+
+    <textarea id="lyrics" class="lyrics" rows="18" spellcheck="true"></textarea>
+
+    <p class="notice">Creative drafts are starting points. Edit, combine, and rewrite lines until the song sounds like you.</p>
+
+  </section>
+
+</main>
+
+</div>
+
+<footer>THOR STUDIO · Made for songwriters · Local-first songwriting tool</footer>
+
+</div>
+
+<script>
+
+(function(){
+
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const STORE = "thorSongwritingProjectsV1";
+
+let currentId = null;
+
+let projects = readProjects();
+
+function readProjects(){
+
+  try {
+
+    const data = JSON.parse(localStorage.getItem(STORE) || "[]");
+
+    return Array.isArray(data) ? data : [];
+
+  } catch(e) { return []; }
+
+}
+
+function persist(){
+
+  try {
+
+    localStorage.setItem(STORE, JSON.stringify(projects));
+
+    renderSaved();
+
+  } catch(e) {
+
+    alert("Thor couldn't save this project. Your browser storage may be full.");
+
+  }
+
+}
+
+function settings(){
+
+  return {
+
+    title:$("title").value.trim() || "Untitled Song",
+
+    genre:$("genre").value,
+
+    mood:$("mood").value,
+
+    voice:$("voice").value,
+
+    structure:$("structure").value,
+
+    intensity:$("intensity").value,
+
+    topic:$("topic").value.trim()
+
+  };
+
+}
+
+function escapeText(s){
+
+  return String(s || "").replace(/[&<>"]/g,c=>({
+
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"
+
+  }[c]));
+
+}
+
+function addMessage(text,who){
+
+  const el=document.createElement("div");
+
+  el.className="message "+(who==="user"?"user":"bot");
+
+  el.textContent=text;
+
+  $("chat").appendChild(el);
+
+  el.scrollIntoView({behavior:"smooth",block:"nearest"});
+
+}
+
+function choose(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+const palettes = {
+
+Country:{
+
+  images:["dusty roads","your old front porch","headlights in the rain","a faded photograph","the radio at midnight","a two-lane highway"],
+
+  feelings:["this small-town heart","the words I never said","the miles between us","the ghost of yesterday","the truth beneath these scars"],
+
+  rhymes:[["night","light","gone","dawn"],["road","load","rain","pain"],["heart","start","apart","dark"]]
+
+},
+
+"Country Rock":{
+
+  images:["burned-out signs","an engine running hot","a storm over the county line","boots beside the door"],
+
+  feelings:["a heart that won't surrender","the fire under my skin","the cost of starting over"],
+
+  rhymes:[["fire","wire","higher","desire"],["road","load","alone","stone"]]
+
+},
+
+"Rap / Hip-Hop":{
+
+  images:["city lights","the weight on my shoulders","a room full of doubt","the top of the skyline"],
+
+  feelings:["the hunger in my chest","the truth behind the flex","the scars that made me dangerous"],
+
+  rhymes:[["grind","mind","time","climb"],["pressure","measure","treasure","lesser"],["real","steel","feel","deal"]]
+
+},
+
+"R&B / Soul":{
+
+  images:["blue light on your face","the silence after two","your shadow in my doorway","a slow song in the dark"],
+
+  feelings:["the pull between us","the truth inside your eyes","a love I can't explain"],
+
+  rhymes:[["slow","know","glow","go"],["eyes","lies","inside","tonight"]]
+
+},
+
+Pop:{
+
+  images:["a city full of color","the world beneath our feet","a spark across the room","the moment time stood still"],
+
+  feelings:["the life we're chasing","the beat inside our hearts","a chance to start again"],
+
+  rhymes:[["tonight","light","alive","high"],["away","stay","day","say"]]
+
+},
+
+Rock:{
+
+  images:["broken glass","a wall of feedback","the thunder in my chest","a match against the dark"],
+
+  feelings:["the rage I kept inside","the truth they tried to bury","a reason to resist"],
+
+  rhymes:[["stone","known","alone","bone"],["fight","night","right","light"]]
+
+},
+
+Metal:{
+
+  images:["iron skies","a kingdom made of ash","the silence before the storm","shadows at the gate"],
+
+  feelings:["the fury in my veins","the will that won't be broken","the end of my surrender"],
+
+  rhymes:[["flame","pain","remain","chain"],["fall","wall","crawl","all"]]
+
+}
+
+};
+
+function palette(){
+
+  return palettes[$("genre").value] || {
+
+    images:["the edge of the morning","a room without a sound","the lights across the water","the world outside"],
+
+    feelings:["the truth I keep inside","the dream I can't let go","the person I'm becoming"],
+
+    rhymes:[["day","away","stay","say"],["night","light","fight","sight"]]
+
+  };
+
+}
+
+function themeLine(topic){
+
+  const t=topic || "finding my own way";
+
+  return choose([
+
+    "I'm still learning what it means to "+t+".",
+
+    "Every road I take keeps leading back to "+t+".",
+
+    "There's a part of me that still remembers "+t+".",
+
+    "I turned all my doubts into a story about "+t+".",
+
+    "If the truth comes out, it'll sound a lot like "+t+"."
+
+  ]);
+
+}
+
+function makeSong(){
+
+  const s=settings(),p=palette();
+
+  const image=()=>choose(p.images),feel=()=>choose(p.feelings);
+
+  const rhyme=choose(p.rhymes);
+
+  const topic=s.topic || "finding my own way";
+
+  const title=s.title;
+
+  const intro="["+s.genre+" · "+s.mood+" · "+s.voice+"]";
+
+  const verse1=[
+
+    "The room was quiet, but my mind was running wild,",
+
+    "I wore a practiced smile and tried to play it mild,",
+
+    "Outside, "+image()+" was calling out my name,",
+
+    "Inside, I knew that nothing would be quite the same."
+
+  ];
+
+  verse1[2]="Out there, "+image()+" was calling out my name,";
+
+  const chorus=[
+
+    "So let it "+rhyme[0]+", let it all come undone,",
+
+    "I'm not finished yet; I've only just begun,",
+
+    themeLine(topic),
+
+    "I'll turn these broken pieces into something I can "+rhyme[1]+"."
+
+  ];
+
+  const verse2=[
+
+    "I kept the hard truths hidden underneath my skin,",
+
+    "Lost a couple battles, but I learned to start again,",
+
+    "With "+image()+" still burning somewhere in my mind,",
+
+    "I'm done with leaving all the best of me behind."
+
+  ];
+
+  const bridge=[
+
+    "Maybe I'm a work of art with a few rough lines,",
+
+    "Maybe getting lost is how we learn to find,",
+
+    "Whatever waits beyond this moment in the blue,",
+
+    "I'll meet it as myself, with nothing left to prove."
+
+  ];
+
+  const chorus2=[
+
+    "So let it "+rhyme[2]+", let the whole world hear,",
+
+    "I've been through the silence, I've outlived the fear,",
+
+    themeLine(topic),
+
+    "And this time, when I fall, I'll rise and "+rhyme[3]+"."
+
+  ];
+
+  const rapVerse=[
+
+    "I took every setback, made a map from the damage,",
+
+    "Turned a pocket full of doubt to a plan I could manage,",
+
+    "No borrowed little story, no mask for the cameras,",
+
+    "I'm writing every bar like the truth really matters.",
+
+    "I was down in the dark where the doubts got loud,",
+
+    "Now I'm building my lane, never begging the crowd,",
+
+    "If the world wants a label, let it say what it will,",
+
+    "I've got words left to write and a heart made of steel."
+
+  ];
+
+  let sections=[];
+
+  const verse=s.genre==="Rap / Hip-Hop" ? rapVerse.join("\n") : verse1.join("\n");
+
+  const second=s.genre==="Rap / Hip-Hop" ? rapVerse.slice().reverse().join("\n") : verse2.join("\n");
+
+  sections.push("["+title+"]\n\n"+intro);
+
+  if(s.structure==="Freestyle"){
+
+    sections.push("[Verse]\n"+verse+"\n\n[Hook]\n"+chorus.join("\n")+"\n\n[Verse 2]\n"+second);
+
+  } else {
+
+    sections.push("[Verse 1]\n"+verse);
+
+    sections.push("[Chorus]\n"+chorus.join("\n"));
+
+    sections.push("[Verse 2]\n"+second);
+
+    sections.push("[Chorus]\n"+chorus.join("\n"));
+
+    if(s.structure!=="Verse / Chorus / Verse / Chorus"){
+
+      sections.push("[Bridge]\n"+bridge.join("\n"));
+
+      sections.push("[Final Chorus]\n"+chorus2.join("\n"));
+
+    }
+
+    if(s.structure==="Intro / Verse / Chorus / Verse / Chorus / Outro"){
+
+      sections.push("[Outro]\n"+themeLine(topic)+"\n"+choose(p.images)+" fades into the night.");
+
+    }
+
+  }
+
+  return sections.join("\n\n");
+
+}
+
+function generate(){
+
+  $("lyrics").value=makeSong();
+
+  addMessage("I made a first draft using your current settings. This local version works from songwriting patterns, so treat it as a sketch to edit rather than a fully AI-written song. Tell me what to change next.", "bot");
+
+}
+
+function respond(text){
+
+  const q=text.trim();
+
+  if(!q)return;
+
+  addMessage(q,"user");
+
+  const lower=q.toLowerCase();
+
+  let lyrics=$("lyrics").value;
+
+  if(/generate|write (me )?(a )?(song|lyrics)|start (a )?song|make (a )?song/.test(lower) || !lyrics.trim()){
+
+    $("topic").value=$("topic").value || q;
+
+    generate();
+
+    return;
+
+  }
+
+  if(/darker|more dark|make it dark/.test(lower)){
+
+    $("mood").value="Dark";
+
+    $("lyrics").value=lyrics.replace(/quiet/g,"hollow").replace(/light/g,"shadow").replace(/hope/g,"doubt");
+
+    addMessage("I shifted a few words toward a darker mood. For a deeper rewrite, give me the exact verse or feeling you want changed.","bot");return;
+
+  }
+
+  if(/country|rap|hip.hop|r&b|rock|metal|pop/.test(lower)){
+
+    const genres=["Country","Country Rock","Rap / Hip-Hop","R&B / Soul","Pop","Rock","Metal"];
+
+    const match=genres.find(g=>lower.includes(g.toLowerCase()) || (g==="Rap / Hip-Hop" && /rap|hip.hop/.test(lower)));
+
+    if(match)$("genre").value=match;
+
+  }
+
+  if(/chorus|hook/.test(lower)){
+
+    const p=palette(),r=choose(p.rhymes),topic=$("topic").value || "the truth I keep inside";
+
+    const replacement="[Chorus]\n"+
+
+      "Let it "+r[0]+", let the old walls fall,\n"+
+
+      "I found my voice, now I'm giving it all,\n"+
+
+      themeLine(topic)+"\n"+
+
+      "I'm standing here, still answering the call.";
+
+    if(lyrics.trim()){
+
+      const re=/\[(?:Final )?Chorus\][\s\S]*?(?=\n\n\[|$)/i;
+
+      $("lyrics").value=re.test(lyrics)?lyrics.replace(re,replacement):lyrics+"\n\n"+replacement;
+
+    } else $("lyrics").value=replacement;
+
+    addMessage("I drafted an alternate hook and placed it in your lyrics. Read it aloud and adjust the phrasing to fit your melody.","bot");return;
+
+  }
+
+  if(/verse two|verse 2|second verse/.test(lower)){
+
+    const s=settings(),p=palette();
+
+    const v="[Verse 2]\n"+
+
+      "I carried every lesson like a letter in my coat,\n"+
+
+      "Found a little truth in every word I never wrote,\n"+
+
+      "With "+choose(p.images)+" and a promise to be true,\n"+
+
+      "I'm finally finding out what I was meant to do.";
+
+    $("lyrics").value=lyrics+"\n\n"+v;
+
+    addMessage("I've added a new second-verse draft. You can edit it directly in the lyrics workspace.","bot");return;
+
+  }
+
+  if(/rewrite|improve|better rhyme|rhymes|change/.test(lower)){
+
+    const p=palette(),r=choose(p.rhymes);
+
+    $("lyrics").value=lyrics+"\n\n[Alternate lines]\n"+
+
+      "I had to lose my way before I learned to "+r[0]+",\n"+
+
+      "Now every scar reminds me why I chose to "+r[1]+".";
+
+    addMessage("I've added alternate lines at the bottom so your original stays intact. This version is pattern-based, not a full language-model rewrite. Tell me which lines you want to keep.","bot");return;
+
+  }
+
+  if(/save/.test(lower)){saveSong();addMessage("I saved the current draft in this browser, if storage is available.","bot");return;}
+
+  if(/title|name the song/.test(lower)){
+
+    const t=$("topic").value || "Midnight Memories";
+
+    $("title").value=t.split(" ").slice(0,5).map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
+
+    addMessage("I've suggested a working title based on your song idea. You can change it in Song settings.","bot");return;
+
+  }
+
+  if(/help|what can you do/.test(lower)){
+
+    addMessage("I can generate a structured draft, switch genres, suggest alternate hooks, add a second verse, adjust a few words toward a darker mood, save drafts, and export lyrics. This GitHub-only version doesn't understand prompts like a cloud AI model; specific editing instructions and manual changes work best.","bot");return;
+
+  }
+
+  $("topic").value=$("topic").value || q;
+
+  addMessage("I've added your idea to the song topic. This version runs entirely in your browser, so it can't interpret every instruction like a full AI model. Try “generate song,” “rewrite the chorus,” “write verse two,” or change the settings and generate another draft.","bot");
+
+}
+
+function saveSong(){
+
+  const text=$("lyrics").value.trim();
+
+  if(!text){alert("Write or generate some lyrics first.");return;}
+
+  const s=settings();
+
+  const id=currentId || (Date.now().toString(36)+Math.random().toString(36).slice(2,7));
+
+  const item={id,title:s.title,genre:s.genre,mood:s.mood,topic:s.topic,lyrics:text,updated:Date.now()};
+
+  const i=projects.findIndex(p=>p.id===id);
+
+  if(i>=0)projects[i]=item;else projects.unshift(item);
+
+  currentId=id;
+
+  persist();
+
+  addMessage("Saved “"+item.title+"” to this browser's local song library.","bot");
+
+}
+
+function renderSaved(){
+
+  const root=$("saved");root.replaceChildren();
+
+  if(!projects.length){
+
+    const empty=document.createElement("p");empty.className="muted";
+
+    empty.textContent="Your saved songs will appear here.";
+
+    root.appendChild(empty);return;
+
+  }
+
+  projects.forEach(p=>{
+
+    const b=document.createElement("button");
+
+    b.className="saved-item"+(p.id===currentId?" active":"");
+
+    b.textContent=p.title || "Untitled Song";
+
+    const small=document.createElement("small");
+
+    small.textContent=p.genre+" · "+new Date(p.updated).toLocaleDateString();
+
+    b.appendChild(small);
+
+    b.onclick=()=>loadSong(p.id);
+
+    root.appendChild(b);
+
+  });
+
+}
+
+function loadSong(id){
+
+  const p=projects.find(x=>x.id===id);if(!p)return;
+
+  currentId=p.id;
+
+  $("title").value=p.title || "";
+
+  $("genre").value=p.genre || "Country";
+
+  $("mood").value=p.mood || "Emotional";
+
+  $("topic").value=p.topic || "";
+
+  $("lyrics").value=p.lyrics || "";
+
+  renderSaved();
+
+  addMessage("Loaded “"+p.title+"” into the workspace.","bot");
+
+}
+
+async function copyLyrics(){
+
+  const text=$("lyrics").value;
+
+  if(!text.trim()){alert("There are no lyrics to copy yet.");return;}
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    $("copy").textContent="Copied!";
+
+    setTimeout(()=>$("copy").textContent="Copy lyrics",1500);
+
+  }catch(e){
+
+    $("lyrics").focus();$("lyrics").select();
+
+    alert("Your lyrics are selected. Tap Copy from the iPhone selection menu.");
+
+  }
+
+}
+
+function downloadLyrics(){
+
+  const text=$("lyrics").value;
+
+  if(!text.trim()){alert("Generate some lyrics first.");return;}
+
+  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+
+  a.download=(($("title").value || "thor-song").replace(/[^\w -]/g,"").trim() || "thor-song")+".txt";
+
+  document.body.appendChild(a);a.click();a.remove();
+
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+}
+
+$("generate").addEventListener("click",generate);
+
+$("send").addEventListener("click",()=>{const v=$("prompt").value;$("prompt").value="";respond(v);});
+
+$("prompt").addEventListener("keydown",e=>{
+
+  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("send").click();}
+
+});
+
+$("copy").addEventListener("click",copyLyrics);
+
+$("download").addEventListener("click",downloadLyrics);
+
+$("save").addEventListener("click",saveSong);
+
+$("clear").addEventListener("click",()=>{
+
+  if($("lyrics").value.trim()&&!confirm("Start a new blank song? Save your current draft first if needed."))return;
+
+  currentId=null;$("title").value="";$("topic").value="";$("lyrics").value="";
+
+  addMessage("Fresh page, fresh song. Choose your settings and tell me what we're writing.","bot");
+
+  renderSaved();
+
+});
+
+document.querySelectorAll("[data-prompt]").forEach(b=>{
+
+  b.addEventListener("click",()=>{
+
+    $("prompt").value=b.dataset.prompt;
+
+    $("topic").value=b.dataset.prompt;
+
+    respond(b.dataset.prompt);$("prompt").value="";
+
+  });
+
+});
+
+renderSaved();
+
+})();
+
+</script>
+
+</body>
+
+</html>
