@@ -10,119 +10,391 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<meta name="theme-color" content="#10101b">
+<meta name="theme-color" content="#100b1d">
 
-<title>Thor — AI Songwriting Studio</title>
+<title>THOR — Songwriting Universe</title>
 
 <style>
 
-:root{--bg:#0d0d16;--panel:#171725;--panel2:#242238;--text:#f5f3ff;--muted:#aaa5c1;--accent:#b69cff;--orange:#ffb66d;--border:#39354f;--green:#80e2b3}
+:root{
+
+  --bg:#100b1d;--panel:#1c1530;--panel2:#271d40;
+
+  --text:#fff9ff;--muted:#b9aecb;--purple:#c4a0ff;
+
+  --pink:#ff91d5;--orange:#ffba70;--green:#81edbd;
+
+  --border:#49365f;--radius:23px;
+
+}
 
 *{box-sizing:border-box}
 
-body{margin:0;background:radial-gradient(ellipse at top,#29213f,#0d0d16 65%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+html{scroll-behavior:smooth}
+
+body{
+
+  margin:0;background:
+
+  radial-gradient(ellipse at 10% 0%,#41205d 0,transparent 40%),
+
+  radial-gradient(ellipse at 100% 50%,#281638 0,transparent 40%),
+
+  var(--bg);
+
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,
+
+  "Segoe UI",sans-serif;min-height:100vh;
+
+}
 
 button,input,textarea,select{font:inherit}
 
-button{cursor:pointer}
+button{cursor:pointer;color:inherit}
 
-.app{max-width:1150px;margin:auto;padding:18px 12px 40px}
+button:disabled{opacity:.55;cursor:wait}
 
-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,
 
-.logo{width:49px;height:49px;flex-shrink:0;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#c3a3ff,#ffb66d);color:#191324;font-size:28px;font-weight:900}
+select:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
 
-.brand h1{margin:0;font-size:24px;letter-spacing:-1px}
+button:active{transform:scale(.98)}
 
-.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.app{max-width:1000px;margin:auto;padding:18px 15px 115px}
+
+header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+
+.logo{
+
+  width:54px;height:54px;flex-shrink:0;display:grid;place-items:center;
+
+  border-radius:19px;background:linear-gradient(135deg,var(--orange),var(--pink),var(--purple));
+
+  color:#20132d;font-size:33px;font-weight:950;
+
+  box-shadow:0 0 30px #bd8aff30;
+
+}
+
+.brand h1{font-size:23px;letter-spacing:-1.3px;margin:0}
+
+.brand p{font-size:11px;color:var(--muted);margin:4px 0 0}
 
 .status{margin-left:auto;font-size:10px;color:var(--green);text-align:right}
 
-.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:14px}
+.page{display:none;animation:appear .25s ease}
 
-.panel{min-width:0;background:#171725ed;border:1px solid var(--border);border-radius:17px;padding:15px}
+.page.active{display:block}
 
-.sidebar{align-self:start}
+@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 
-h2{font-size:15px;margin:0 0 13px}
+.panel{
 
-h3{font-size:13px;margin:0 0 10px}
+  min-width:0;padding:19px;margin-bottom:15px;border-radius:var(--radius);
 
-label{display:block;color:var(--muted);font-size:12px;margin:13px 0 6px}
+  border:1px solid #ffffff13;
 
-input,textarea,select{width:100%;min-width:0;background:#10101b;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px;outline:none}
+  background:linear-gradient(145deg,#251a39ed,#171123f5);
 
-input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+  box-shadow:0 12px 35px #00000013;
 
-textarea{resize:vertical;min-height:85px;line-height:1.55}
+}
 
-button{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:10px;padding:10px 12px;font-size:12px;font-weight:650}
+h2{font-size:19px;letter-spacing:-.5px;margin:0 0 13px}
 
-button:hover{filter:brightness(1.15)}
+h3{font-size:14px;margin:0 0 10px}
 
-button:disabled{opacity:.5;cursor:wait}
+p{line-height:1.65}
 
-.primary{background:linear-gradient(120deg,#c2a5ff,#f4b7d5);color:#20152c;border:0}
+.muted{color:var(--muted);font-size:12px;line-height:1.7}
 
-.wide{width:100%;margin-top:10px}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--orange);font-weight:850}
 
-.small{font-size:11px;padding:7px 9px}
+.hero{
 
-.muted,.notice{font-size:11px;color:var(--muted);line-height:1.6}
+  padding:25px 21px;overflow:hidden;position:relative;
 
-.notice{margin-top:12px}
+  background:radial-gradient(ellipse at 100% 0%,#7745a7 0,transparent 55%),
 
-.main{display:flex;flex-direction:column;gap:14px}
+  linear-gradient(135deg,#39204f,#1b122c 75%);
 
-.hero h2{font-size:21px;margin-bottom:6px}
+}
 
-.hero p{font-size:13px;color:var(--muted);line-height:1.6;margin:0}
+.hero:after{
 
-.chips,.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+  content:"ϟ";position:absolute;right:9px;top:-26px;
 
-.chip{border-radius:20px;font-size:11px}
+  font-size:180px;font-weight:950;color:#ffffff08;pointer-events:none;
 
-.chat{display:flex;flex-direction:column;gap:10px}
+}
 
-.message{max-width:96%;padding:12px 13px;border-radius:13px;font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.hero h2{font-size:34px;line-height:1.1;max-width:390px;margin:12px 0}
 
-.bot{align-self:flex-start;background:#222137;border:1px solid #39334f}
+.hero p{font-size:13px;color:#ded1ef;max-width:440px}
 
-.user{align-self:flex-end;background:#4b386c}
+.hero .big-button{position:relative;z-index:1}
 
-.chat-box{display:flex;gap:8px;align-items:flex-end;margin-top:12px}
+.big-button{
 
-.chat-box textarea{min-height:48px;max-height:160px}
+  border:0;border-radius:15px;padding:15px 19px;
 
-.chat-box button{min-height:46px;flex-shrink:0}
+  background:linear-gradient(110deg,var(--orange),var(--pink),var(--purple));
 
-.output-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  color:#25142f;font-weight:900;font-size:13px;
 
-.output-head h2{margin:0}
+  box-shadow:0 8px 25px #00000020;
 
-.actions{margin:0}
+}
 
-.lyrics{min-height:360px;max-height:none;white-space:pre-wrap;overflow-wrap:anywhere;background:#10101b;border:1px solid var(--border);border-radius:12px;padding:15px;font-size:14px;line-height:1.9}
+.btn{
 
-.cover-box{border:1px dashed #625778;border-radius:13px;padding:12px;margin-top:8px;background:#10101b;text-align:center}
+  border:1px solid var(--border);background:var(--panel2);
 
-.cover-preview{width:100%;max-width:220px;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#242238;display:block;margin:10px auto}
+  border-radius:12px;padding:11px 13px;font-size:12px;font-weight:750;
 
-.cover-placeholder{display:grid;place-items:center;aspect-ratio:1;width:100%;max-width:220px;margin:10px auto;border-radius:10px;background:linear-gradient(135deg,#32234b,#171725);color:#c8b5ff;font-size:45px}
+}
+
+.btn.primary{background:linear-gradient(110deg,var(--purple),var(--pink));color:#25142f;border:0}
+
+.btn.ghost{background:#ffffff06}
+
+.btn.small{padding:8px 10px;font-size:11px}
+
+.btn.full{width:100%;margin-top:10px}
+
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+
+.between{justify-content:space-between}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+
+.idea-card{
+
+  text-align:left;min-height:115px;padding:15px;border-radius:17px;
+
+  background:linear-gradient(145deg,#302043,#1b1429);
+
+  border:1px solid #ffffff12;
+
+}
+
+.idea-card .emoji{font-size:25px;display:block;margin-bottom:11px}
+
+.idea-card strong{font-size:13px;display:block}
+
+.idea-card small{display:block;font-size:10px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}
+
+.stat{padding:12px;border-radius:15px;background:#ffffff08;border:1px solid #ffffff0b}
+
+.stat strong{font-size:20px;display:block}
+
+.stat span{font-size:10px;color:var(--muted)}
+
+label{display:block;font-size:12px;font-weight:700;color:#e4d7f3;margin:15px 0 7px}
+
+input,textarea,select{
+
+  display:block;width:100%;min-width:0;border:1px solid var(--border);
+
+  border-radius:12px;background:#100b1d;color:var(--text);
+
+  padding:12px;font-size:13px;outline:none;
+
+}
+
+input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+
+textarea{resize:vertical;min-height:100px;line-height:1.7}
+
+textarea::placeholder,input::placeholder{color:#847795}
+
+select option{background:#1c1530}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}
+
+.chip{border:1px solid #ffffff17;background:#ffffff0a;border-radius:30px;padding:9px 12px;font-size:11px}
+
+.chip.selected{border-color:var(--pink);background:#ff91d51a}
+
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+
+.section-head h2{margin:0}
+
+.cover-box{
+
+  border:1px dashed #795d96;border-radius:17px;padding:16px;
+
+  background:#100b1d;text-align:center;
+
+}
+
+.cover-preview,.cover-placeholder{
+
+  width:100%;max-width:245px;aspect-ratio:1;object-fit:cover;
+
+  border-radius:17px;display:block;margin:0 auto 13px;
+
+}
+
+.cover-placeholder{
+
+  display:grid;place-items:center;
+
+  background:linear-gradient(135deg,#55336c,#1d1430);
+
+  font-size:75px;color:var(--pink);
+
+}
+
+.cover-preview[hidden],.cover-placeholder[hidden]{display:none}
 
 .cover-actions{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}
 
-.saved-list{display:grid;gap:7px;margin-top:12px}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:90px}
 
-.saved-item{width:100%;text-align:left;overflow-wrap:anywhere;font-weight:500;background:#10101b}
+.message{max-width:95%;padding:13px 15px;border-radius:17px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
 
-.saved-item.active{border-color:var(--accent);background:#29233c}
+.message.bot{align-self:flex-start;background:#30213f;border:1px solid #ffffff10;border-bottom-left-radius:5px}
 
-.saved-item small{display:block;color:var(--muted);margin-top:4px}
+.message.user{align-self:flex-end;background:linear-gradient(135deg,#6b4391,#48316a);border-bottom-right-radius:5px}
 
-footer{text-align:center;color:#77738c;font-size:11px;margin-top:22px}
+.chat-box{display:flex;align-items:flex-end;gap:8px;margin-top:15px}
 
-@media(max-width:760px){.layout{grid-template-columns:1fr}.sidebar{order:2}.main{order:1}.app{padding:12px 9px 30px}.panel{padding:13px}.lyrics{min-height:300px}.status{font-size:9px}}
+.chat-box textarea{min-height:48px;max-height:150px}
+
+.chat-box button{min-height:48px;flex-shrink:0}
+
+.lyrics{
+
+  min-height:55vh;max-height:none;background:#100b1d;
+
+  font-size:14px;line-height:1.95;padding:17px;
+
+  white-space:pre-wrap;overflow-wrap:anywhere;
+
+}
+
+.lyrics:focus{border-color:var(--pink)}
+
+.lyrics-tip{font-size:11px;color:var(--muted);line-height:1.7}
+
+.saved-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+.song-card{
+
+  min-width:0;overflow:hidden;border-radius:17px;
+
+  background:#211730;border:1px solid #ffffff13;
+
+}
+
+.song-cover{
+
+  width:100%;aspect-ratio:1;object-fit:cover;display:grid;
+
+  place-items:center;background:linear-gradient(135deg,#55336c,#241530);
+
+  color:var(--pink);font-size:55px;
+
+}
+
+.song-card-body{padding:12px}
+
+.song-card h3{overflow-wrap:anywhere;margin:0 0 5px}
+
+.song-card p{font-size:10px;color:var(--muted);margin:0 0 11px}
+
+.song-card .row{gap:6px}
+
+.song-card .btn{flex:1;padding:9px 6px}
+
+.empty{text-align:center;padding:28px 10px}
+
+.empty .emoji{font-size:42px;margin-bottom:10px}
+
+.notice{font-size:11px;color:var(--muted);line-height:1.7;margin-top:12px}
+
+.nav{
+
+  position:fixed;z-index:50;bottom:0;left:0;right:0;
+
+  padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+
+  background:#130d20ed;backdrop-filter:blur(22px);
+
+  border-top:1px solid #ffffff15;
+
+}
+
+.nav-inner{max-width:700px;margin:auto;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+
+.nav button{
+
+  border:0;background:transparent;color:#9f92b2;
+
+  border-radius:13px;padding:8px 2px 6px;
+
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+
+}
+
+.nav button .icon{font-size:21px;line-height:1.2}
+
+.nav button span:last-child{font-size:9px;font-weight:750}
+
+.nav button.active{background:#a77ce51b;color:var(--pink)}
+
+.nav button.active .icon{filter:drop-shadow(0 0 7px #ff91d5a0)}
+
+footer{text-align:center;font-size:10px;color:#857693;margin-top:25px}
+
+.toast{
+
+  position:fixed;z-index:100;bottom:100px;left:50%;transform:translateX(-50%);
+
+  max-width:90%;padding:12px 16px;border-radius:14px;
+
+  background:#342346;border:1px solid var(--border);
+
+  box-shadow:0 8px 30px #0007;font-size:12px;
+
+  display:none;text-align:center;
+
+}
+
+.toast.show{display:block;animation:appear .2s ease}
+
+@media(min-width:700px){
+
+  .app{padding-top:25px}
+
+  .hero{padding:34px}
+
+  .hero h2{font-size:43px}
+
+  .saved-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+  .lyrics{min-height:600px}
+
+  .nav{bottom:16px;left:50%;right:auto;transform:translateX(-50%);width:min(690px,95%);border:1px solid #ffffff20;border-radius:22px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));box-shadow:0 10px 40px #0008}
+
+  .app{padding-bottom:125px}
+
+}
+
+@media(max-width:360px){
+
+  .app{padding-left:9px;padding-right:9px}
+
+  .panel{padding:14px}
+
+  .hero h2{font-size:29px}
+
+  .nav button span:last-child{font-size:8px}
+
+}
 
 </style>
 
@@ -138,9 +410,9 @@ footer{text-align:center;color:#77738c;font-size:11px;margin-top:22px}
 
   <div class="brand">
 
-    <h1>THOR <span style="color:var(--accent)">STUDIO</span></h1>
+    <h1>THOR <span style="color:var(--pink)">STUDIO</span></h1>
 
-    <p>Your idea. Your music. Your story.</p>
+    <p>Your idea. Your music. Your universe.</p>
 
   </div>
 
@@ -148,213 +420,389 @@ footer{text-align:center;color:#77738c;font-size:11px;margin-top:22px}
 
 </header>
 
-<div class="layout">
+<!-- HOME -->
 
-<aside class="sidebar panel">
+<section class="page active" id="page-home">
 
-  <h2>Song settings</h2>
+  <div class="panel hero">
 
-  <label for="title">Song title</label>
+    <div class="eyebrow">YOUR CREATIVE UNIVERSE</div>
 
-  <input id="title" placeholder="Give your song a name">
+    <h2>Make some noise.<br>Break some rules.</h2>
 
-  <label for="genre">Genre or custom style</label>
+    <p>One weird thought. One wild story. One feeling you can't explain. Let's turn it into a song.</p>
 
-  <input id="genre" list="genres" value="Country" placeholder="Any genre or combination">
-
-  <datalist id="genres">
-
-    <option value="Country"><option value="Country Rock">
-
-    <option value="Rap / Hip-Hop"><option value="R&B / Soul">
-
-    <option value="Pop"><option value="Rock"><option value="Metal">
-
-    <option value="Blues"><option value="Gospel"><option value="Folk">
-
-    <option value="EDM / Dance"><option value="Indie"><option value="Jazz">
-
-    <option value="Reggae"><option value="Alternative"><option value="Comedy">
-
-    <option value="Punk"><option value="Classical"><option value="Musical Theater">
-
-    <option value="Phonk"><option value="Lo-fi"><option value="Bluegrass">
-
-  </datalist>
-
-  <label for="mood">Mood or feeling</label>
-
-  <input id="mood" list="moods" value="Emotional" placeholder="Describe any mood">
-
-  <datalist id="moods">
-
-    <option value="Emotional"><option value="Dark"><option value="Romantic">
-
-    <option value="Angry"><option value="Funny"><option value="Hopeful">
-
-    <option value="Heartbroken"><option value="Nostalgic"><option value="Dreamy">
-
-    <option value="Rebellious"><option value="Inspirational"><option value="Chill">
-
-  </datalist>
-
-  <label for="voice">Vocal style</label>
-
-  <input id="voice" value="Male vocalist" placeholder="Male, female, duet, choir, etc.">
-
-  <label for="structure">Song structure</label>
-
-  <select id="structure">
-
-    <option>Full song</option>
-
-    <option>Verse / Chorus / Verse / Chorus</option>
-
-    <option>Verse / Chorus / Verse / Chorus / Bridge / Final Chorus</option>
-
-    <option>Intro / Verse / Chorus / Verse / Chorus / Outro</option>
-
-    <option>Freestyle</option>
-
-    <option>Storytelling</option>
-
-    <option>Custom structure</option>
-
-  </select>
-
-  <label for="intensity">Language and intensity</label>
-
-  <input id="intensity" value="Raw and honest" placeholder="Clean, explicit, poetic, etc.">
-
-  <label for="topic">Your idea — anything goes</label>
-
-  <textarea id="topic" rows="5" placeholder="Tell Thor anything: a story, a memory, a strange idea, a character, a dream, a joke, a single sentence, or a feeling. Include details you want preserved."></textarea>
-
-  <button class="primary wide" id="generate">ϟ Turn my idea into a song</button>
-
-  <button class="wide" id="clear">＋ Start a new song</button>
-
-  <h2 style="margin-top:24px">Optional AI connection</h2>
-
-  <label for="endpoint">AI backend URL</label>
-
-  <input id="endpoint" type="url" placeholder="https://your-worker.example.com/generate-song">
-
-  <p class="muted">Leave blank to use local mode. For full AI writing, connect a compatible backend that accepts POST JSON and returns lyrics or text. Never put a private API key here.</p>
-
-  <button class="wide small" id="testEndpoint">Check AI connection</button>
-
-  <h2 style="margin-top:24px">Album artwork</h2>
-
-  <p class="muted">Optional. Choose a cover image from Photos or Files on your iPhone.</p>
-
-  <div class="cover-box">
-
-    <div id="coverPlaceholder" class="cover-placeholder">♫</div>
-
-    <img id="coverPreview" class="cover-preview" alt="Album cover preview" hidden>
-
-    <input id="coverFile" type="file" accept="image/*">
-
-    <div class="cover-actions" style="margin-top:10px">
-
-      <button class="small" id="removeCover">Remove cover</button>
-
-      <button class="small" id="downloadCover">Download cover</button>
-
-    </div>
-
-    <p class="muted">Square artwork is recommended. Large images may use a lot of browser storage.</p>
+    <button class="big-button" id="goCreate">ϟ Create something wild →</button>
 
   </div>
 
-  <p class="notice">Songs and artwork are saved in this browser on this device. They are not automatically synced or backed up.</p>
+  <div class="stats">
 
-  <h2 style="margin-top:24px">Saved songs</h2>
+    <div class="stat"><strong id="songCount">0</strong><span>Songs saved</span></div>
 
-  <div id="saved" class="saved-list"></div>
+    <div class="stat"><strong id="wordCount">0</strong><span>Words written</span></div>
 
-</aside>
+    <div class="stat"><strong>∞</strong><span>Ideas welcome</span></div>
 
-<main class="main">
+  </div>
 
-  <section class="panel hero">
+  <div class="section-head">
 
-    <h2>What are we writing today?</h2>
+    <h2>Pick a vibe ✨</h2>
 
-    <p>Start with anything. Thor can use your description as the foundation for lyrics, hooks, verses, storytelling, or an entirely unusual song concept.</p>
+    <span class="muted">Or invent your own</span>
+
+  </div>
+
+  <div class="grid">
+
+    <button class="idea-card" data-idea="Write an emotional song about someone who keeps smiling while quietly struggling inside. Use vivid scenes and an unforgettable chorus." data-genre="Country" data-mood="Heartbroken">
+
+      <span class="emoji">💔</span><strong>Beautifully Broken</strong><small>Emotional stories that hit home</small>
+
+    </button>
+
+    <button class="idea-card" data-idea="Write a ridiculous comedy song about a robot falling in love with a pickup truck. Include clever punchlines and an absurd chorus." data-genre="Comedy" data-mood="Funny">
+
+      <span class="emoji">🤖</span><strong>Absolutely Unhinged</strong><small>Weird ideas encouraged</small>
+
+    </button>
+
+    <button class="idea-card" data-idea="Write a cinematic sci-fi song about discovering that your dreams are memories from another life." data-genre="Cinematic Pop" data-mood="Dreamy">
+
+      <span class="emoji">🌌</span><strong>Otherworldly</strong><small>Go beyond reality</small>
+
+    </button>
+
+    <button class="idea-card" data-idea="Write a hard-hitting rap about turning setbacks into success, using internal rhymes, wordplay and a memorable hook." data-genre="Rap / Hip-Hop" data-mood="Rebellious">
+
+      <span class="emoji">🎤</span><strong>Mic on Fire</strong><small>Bars, beats and big energy</small>
+
+    </button>
+
+    <button class="idea-card" data-idea="Write an uplifting anthem about starting over when life has not gone according to plan." data-genre="Pop Rock" data-mood="Hopeful">
+
+      <span class="emoji">⚡</span><strong>Rise Again</strong><small>Your comeback starts here</small>
+
+    </button>
+
+    <button class="idea-card" data-idea="Write a darkly funny song about an ordinary day spiraling into a completely ridiculous disaster." data-genre="Dark Comedy" data-mood="Dark and Funny">
+
+      <span class="emoji">🖤</span><strong>Dark Side</strong><small>Let the chaos sing</small>
+
+    </button>
+
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+
+    <div class="section-head"><h2>Recently created</h2><button class="btn small" data-page="vault">View vault →</button></div>
+
+    <div id="recentSongs" class="muted">Your next favorite song could start right here.</div>
+
+  </div>
+
+</section>
+
+<!-- SONG LAB -->
+
+<section class="page" id="page-lab">
+
+  <div class="panel">
+
+    <div class="eyebrow">01 / BUILD YOUR SOUND</div>
+
+    <h2 style="font-size:26px">The Song Lab 🎛️</h2>
+
+    <p class="muted">Set the vibe, describe your vision, and let the creative process begin. No preset genre limits.</p>
+
+    <label for="title">Song title</label>
+
+    <input id="title" placeholder="Give this masterpiece a name">
+
+    <label for="genre">Genre / sound</label>
+
+    <input id="genre" list="genres" value="Country" placeholder="Any genre, blend or custom style">
+
+    <datalist id="genres">
+
+      <option>Country</option><option>Country Rock</option><option>Rap / Hip-Hop</option>
+
+      <option>R&B / Soul</option><option>Pop</option><option>Rock</option>
+
+      <option>Metal</option><option>Blues</option><option>Gospel</option>
+
+      <option>Folk</option><option>EDM / Dance</option><option>Indie</option>
+
+      <option>Jazz</option><option>Reggae</option><option>Alternative</option>
+
+      <option>Comedy</option><option>Punk</option><option>Classical</option>
+
+      <option>Musical Theater</option><option>Phonk</option><option>Lo-fi</option>
+
+      <option>Bluegrass</option><option>Dark Comedy</option><option>Cinematic</option>
+
+    </datalist>
 
     <div class="chips">
 
-      <button class="chip" data-idea="Write an emotional song about someone who keeps smiling while quietly struggling inside. Use specific scenes and an unforgettable chorus.">💔 Hidden feelings</button>
+      <button class="chip" data-field="genre" data-value="Country">🤠 Country</button>
 
-      <button class="chip" data-idea="Write a hilarious song about a robot falling in love with a pickup truck. Make it absurd, catchy, and full of clever punchlines.">🤖 Weird idea</button>
+      <button class="chip" data-field="genre" data-value="Pop">💖 Pop</button>
 
-      <button class="chip" data-idea="Write a cinematic song about a person who discovers that their dreams are memories from another life.">🌌 Sci-fi story</button>
+      <button class="chip" data-field="genre" data-value="Rap / Hip-Hop">🎤 Rap</button>
 
-      <button class="chip" data-idea="Write an energetic rap about turning setbacks into success, with internal rhymes, wordplay, and a strong hook.">🎤 Rap</button>
+      <button class="chip" data-field="genre" data-value="Rock">🎸 Rock</button>
 
-      <button class="chip" data-idea="Write an uplifting song about starting over when life has not gone according to plan.">⚡ Comeback</button>
+      <button class="chip" data-field="genre" data-value="Dark Comedy">🖤 Dark comedy</button>
 
     </div>
 
-  </section>
+    <label for="mood">Mood / emotion</label>
 
-  <section class="panel">
+    <input id="mood" list="moods" value="Emotional" placeholder="Any feeling you want to capture">
 
-    <h2>Songwriting chat</h2>
+    <datalist id="moods">
+
+      <option>Emotional</option><option>Dark</option><option>Romantic</option>
+
+      <option>Angry</option><option>Funny</option><option>Hopeful</option>
+
+      <option>Heartbroken</option><option>Nostalgic</option><option>Dreamy</option>
+
+      <option>Rebellious</option><option>Inspirational</option><option>Chill</option>
+
+    </datalist>
+
+    <label for="voice">Vocal direction</label>
+
+    <input id="voice" value="Male vocalist" placeholder="Male, female, duet, choir, raspy voice...">
+
+    <label for="structure">Song structure</label>
+
+    <select id="structure">
+
+      <option>Full song</option>
+
+      <option>Verse / Chorus / Verse / Chorus</option>
+
+      <option>Verse / Chorus / Verse / Chorus / Bridge / Final Chorus</option>
+
+      <option>Intro / Verse / Chorus / Verse / Chorus / Outro</option>
+
+      <option>Freestyle</option><option>Storytelling</option>
+
+      <option>Custom structure</option>
+
+    </select>
+
+    <label for="intensity">Language / intensity</label>
+
+    <input id="intensity" value="Raw and honest" placeholder="Clean, explicit, poetic, satirical...">
+
+    <label for="topic">What's the story? Anything goes.</label>
+
+    <textarea id="topic" rows="7" placeholder="Tell Thor anything: a memory, a joke, a dream, a character, a personal experience, a wild fantasy, a single line, or a completely random thought."></textarea>
+
+    <p class="muted">💡 Specific details help shape more personal lyrics. Include any lines, names, scenes or ideas you want preserved.</p>
+
+    <button class="btn primary full" id="generate">ϟ Turn my idea into a song</button>
+
+    <button class="btn full" id="clear">＋ Start a new song</button>
+
+  </div>
+
+</section>
+
+<!-- LYRICS -->
+
+<section class="page" id="page-lyrics">
+
+  <div class="panel">
+
+    <div class="eyebrow">02 / YOUR WORDS, YOUR WORLD</div>
+
+    <div class="section-head">
+
+      <h2>Lyrics Studio ✍️</h2>
+
+      <button class="btn small" data-page="lab">Edit settings</button>
+
+    </div>
+
+    <input id="titleDisplay" placeholder="Song title for export">
+
+    <div class="row" style="margin:13px 0">
+
+      <button class="btn small" id="copy">Copy lyrics</button>
+
+      <button class="btn small" id="download">Download .txt</button>
+
+      <button class="btn small" id="save">Save song ♡</button>
+
+    </div>
+
+    <textarea id="lyrics" class="lyrics" rows="22" placeholder="Your lyrics will appear here. Write your own song or generate a draft in the Song Lab. Every word is editable."></textarea>
+
+    <p class="lyrics-tip">✦ Tap into the lyrics and edit anything. Your words are yours. Save the song to keep your current lyrics and artwork together.</p>
+
+  </div>
+
+</section>
+
+<!-- CHAT -->
+
+<section class="page" id="page-chat">
+
+  <div class="panel">
+
+    <div class="eyebrow">03 / YOUR CREATIVE PARTNER</div>
+
+    <h2 style="font-size:26px">Talk to Thor ⚡</h2>
+
+    <p class="muted">Ask for changes, new verses, different hooks, a complete rewrite or a whole new direction.</p>
 
     <div id="chat" class="chat" aria-live="polite">
 
-      <div class="message bot">Hey, I'm Thor. ⚡ Give me any idea you can imagine. It doesn't need to be a song idea yet. Tell me a story, describe a character, share a line, or ask me to transform something completely unexpected into lyrics. You can also upload your album cover whenever you're ready.</div>
+      <div class="message bot">Hey, songwriter. ⚡ I'm Thor. Give me an idea, a feeling or a challenge. We can work on your lyrics together. What are we making?</div>
 
     </div>
 
     <div class="chat-box">
 
-      <textarea id="prompt" rows="2" placeholder="Ask for a rewrite, a different genre, a new verse, or anything else..."></textarea>
+      <textarea id="prompt" rows="2" placeholder="Rewrite the chorus, change the vibe..."></textarea>
 
-      <button class="primary" id="send">Send ↗</button>
+      <button class="btn primary" id="send">Send ↗</button>
 
     </div>
 
-    <p class="notice">Examples: “Make it sound more personal,” “turn this into dark comedy,” “rewrite the whole song,” or “make the chorus easier to sing.”</p>
+    <div class="chips">
 
-  </section>
+      <button class="chip" data-prompt="Make the lyrics more personal and specific.">Make it personal</button>
 
-  <section class="panel">
+      <button class="chip" data-prompt="Rewrite the chorus to make it catchy and memorable.">New hook</button>
 
-    <div class="output-head">
+      <button class="chip" data-prompt="Make the song darker, more intense and unexpected.">Go darker</button>
 
-      <h2>Lyrics workspace</h2>
+      <button class="chip" data-prompt="Add a second verse that advances the story.">Add a verse</button>
 
-      <div class="actions">
+    </div>
 
-        <button class="small" id="copy">Copy lyrics</button>
+  </div>
 
-        <button class="small" id="download">Download .txt</button>
+</section>
 
-        <button class="small" id="save">Save song</button>
+<!-- VAULT -->
+
+<section class="page" id="page-vault">
+
+  <div class="panel">
+
+    <div class="eyebrow">04 / YOUR PERSONAL MUSIC LIBRARY</div>
+
+    <h2 style="font-size:27px">The Vault 🗝️</h2>
+
+    <p class="muted">Your ideas, your lyrics, your album covers. All the projects you save in this browser.</p>
+
+    <div class="row" style="margin-bottom:16px">
+
+      <input id="vaultSearch" placeholder="Search your songs..." style="flex:1">
+
+      <button class="btn primary" data-page="lab">＋ New song</button>
+
+    </div>
+
+    <div id="saved" class="saved-list"></div>
+
+  </div>
+
+</section>
+
+<!-- SETTINGS / ARTWORK -->
+
+<section class="page" id="page-settings">
+
+  <div class="panel">
+
+    <div class="eyebrow">05 / PERSONALIZE YOUR PROJECT</div>
+
+    <h2 style="font-size:26px">Artwork & Settings 🎨</h2>
+
+    <p class="muted">Give your song a visual identity, or connect your own AI backend for more capable songwriting.</p>
+
+    <h3 style="margin-top:23px">Album artwork</h3>
+
+    <div class="cover-box">
+
+      <div id="coverPlaceholder" class="cover-placeholder">♫</div>
+
+      <img id="coverPreview" class="cover-preview" alt="Album cover preview" hidden>
+
+      <label for="coverFile">Choose artwork from Photos or Files</label>
+
+      <input id="coverFile" type="file" accept="image/*">
+
+      <div class="cover-actions" style="margin-top:13px">
+
+        <button class="btn small" id="removeCover">Remove cover</button>
+
+        <button class="btn small" id="downloadCover">Download cover</button>
 
       </div>
 
+      <p class="muted">Square images work best. Images are resized to help reduce storage use.</p>
+
     </div>
 
-    <label for="lyrics">Your editable lyrics</label>
+    <h3 style="margin-top:26px">AI connection</h3>
 
-    <textarea id="lyrics" class="lyrics" rows="18" placeholder="Your song will appear here. You can also write or paste your own lyrics."></textarea>
+    <label for="endpoint">AI backend URL</label>
 
-    <p class="notice">Your words stay editable. Save your song to keep its lyrics, settings, and uploaded cover together.</p>
+    <input id="endpoint" type="url" placeholder="https://your-worker.example.com/generate-song">
 
-  </section>
+    <p class="muted">Leave blank to use local mode. For genuinely AI-powered writing, use a compatible backend that accepts POST JSON and returns lyrics or text. Never place a private API key in this public website.</p>
 
-</main>
+    <button class="btn primary full" id="testEndpoint">Check AI connection</button>
 
-</div>
+    <div class="panel" style="margin-top:20px;background:#100b1d">
+
+      <h3>About local mode</h3>
+
+      <p class="muted">Thor's local writing mode works without a server, but uses templates rather than a real AI model. A connected AI backend is needed to interpret unusual ideas and follow detailed revision instructions.</p>
+
+      <p class="muted">Saved songs and covers are stored in this browser on this device. They are not automatically synced or backed up.</p>
+
+    </div>
+
+  </div>
+
+</section>
 
 <footer>THOR STUDIO · Built for songwriters · GitHub Pages compatible</footer>
 
 </div>
+
+<nav class="nav" aria-label="Main navigation">
+
+  <div class="nav-inner">
+
+    <button class="active" data-page="home"><span class="icon">⌂</span><span>Home</span></button>
+
+    <button data-page="lab"><span class="icon">ϟ</span><span>Song Lab</span></button>
+
+    <button data-page="lyrics"><span class="icon">✍️</span><span>Lyrics</span></button>
+
+    <button data-page="chat"><span class="icon">💬</span><span>Thor AI</span></button>
+
+    <button data-page="vault"><span class="icon">🎵</span><span>My Music</span></button>
+
+    <button data-page="settings"><span class="icon">🎨</span><span>Settings</span></button>
+
+  </div>
+
+</nav>
+
+<div id="toast" class="toast" role="status"></div>
 
 <script>
 
@@ -362,47 +810,67 @@ footer{text-align:center;color:#77738c;font-size:11px;margin-top:22px}
 
 "use strict";
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-const STORE = "thorSongwritingProjectsV3";
+const STORE="thorSongwritingProjectsV3";
 
-const SETTINGS_STORE = "thorStudioSettingsV1";
+const SETTINGS_STORE="thorStudioSettingsV1";
 
-let currentId = null;
-
-let coverData = "";
-
-let coverName = "";
-
-let projects = readProjects();
+let currentId=null,coverData="",coverName="",projects=readProjects(),toastTimer;
 
 function readProjects(){
 
-  try {
+  try{
 
-    const data = JSON.parse(localStorage.getItem(STORE) || "[]");
+    const v=JSON.parse(localStorage.getItem(STORE)||"[]");
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(v)?v:[];
 
-  } catch(e) { return []; }
+  }catch(e){return []}
 
 }
+
+function notify(message){
+
+  const t=$("toast");t.textContent=message;t.classList.add("show");
+
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2600);
+
+}
+
+function go(page){
+
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));
+
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  if(page==="vault")renderSaved();
+
+  if(page==="home")renderHome();
+
+}
+
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+
+$("goCreate").addEventListener("click",()=>go("lab"));
 
 function settings(){
 
   return {
 
-    title:$("title").value.trim() || "Untitled Song",
+    title:$("title").value.trim()||"Untitled Song",
 
-    genre:$("genre").value.trim() || "Any genre",
+    genre:$("genre").value.trim()||"Any genre",
 
-    mood:$("mood").value.trim() || "Any mood",
+    mood:$("mood").value.trim()||"Any mood",
 
-    voice:$("voice").value.trim() || "Any vocal style",
+    voice:$("voice").value.trim()||"Any vocal style",
 
     structure:$("structure").value,
 
-    intensity:$("intensity").value.trim() || "Natural",
+    intensity:$("intensity").value.trim()||"Natural",
 
     topic:$("topic").value.trim()
 
@@ -412,7 +880,15 @@ function settings(){
 
 function safeFileName(s){
 
-  return (s || "thor-song").replace(/[^\w -]/g,"").trim().replace(/\s+/g,"-") || "thor-song";
+  return(s||"thor-song").replace(/[^\w -]/g,"").trim().replace(/\s+/g,"-")||"thor-song";
+
+}
+
+function setStatus(text,good){
+
+  $("status").textContent="● "+text;
+
+  $("status").style.color=good?"var(--green)":"var(--orange)";
 
 }
 
@@ -422,33 +898,21 @@ function addMessage(text,who){
 
   el.className="message "+(who==="user"?"user":"bot");
 
-  el.textContent=text;
-
-  $("chat").appendChild(el);
+  el.textContent=text;$("chat").appendChild(el);
 
   el.scrollIntoView({behavior:"smooth",block:"nearest"});
 
 }
 
-function setStatus(text,good){
-
-  $("status").textContent=(good?"● ":"● ")+text;
-
-  $("status").style.color=good?"var(--green)":"var(--orange)";
-
-}
-
 function showCover(data,name){
 
-  coverData=data || "";
-
-  coverName=name || "";
+  coverData=data||"";coverName=name||"";
 
   $("coverPreview").hidden=!coverData;
 
   $("coverPlaceholder").hidden=!!coverData;
 
-  $("coverPreview").src=coverData || "";
+  $("coverPreview").src=coverData||"";
 
   $("coverFile").value="";
 
@@ -458,13 +922,7 @@ function compressImage(file){
 
   return new Promise((resolve,reject)=>{
 
-    if(!file || !file.type.startsWith("image/")){
-
-      reject(new Error("Choose a valid image file."));
-
-      return;
-
-    }
+    if(!file||!file.type.startsWith("image/"))return reject(new Error("Choose an image file."));
 
     const reader=new FileReader();
 
@@ -478,9 +936,7 @@ function compressImage(file){
 
       img.onload=()=>{
 
-        const max=1200;
-
-        const scale=Math.min(1,max/Math.max(img.width,img.height));
+        const scale=Math.min(1,1200/Math.max(img.width,img.height));
 
         const canvas=document.createElement("canvas");
 
@@ -488,11 +944,9 @@ function compressImage(file){
 
         canvas.height=Math.max(1,Math.round(img.height*scale));
 
-        const ctx=canvas.getContext("2d");
+        canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
 
-        ctx.drawImage(img,0,0,canvas.width,canvas.height);
-
-        resolve(canvas.toDataURL("image/jpeg",0.84));
+        resolve(canvas.toDataURL("image/jpeg",.82));
 
       };
 
@@ -508,101 +962,51 @@ function compressImage(file){
 
 $("coverFile").addEventListener("change",async()=>{
 
-  const file=$("coverFile").files[0];
-
-  if(!file)return;
+  const f=$("coverFile").files[0];if(!f)return;
 
   try{
 
-    showCover(await compressImage(file),file.name);
+    showCover(await compressImage(f),f.name);
 
-    addMessage("Your album cover is ready. Save the song to keep the artwork with this project.","bot");
+    notify("Artwork added! Save your song to keep it with the project.");
 
-  }catch(e){
-
-    alert(e.message || "Could not load that image.");
-
-  }
+  }catch(e){notify(e.message||"Could not load the image.")}
 
 });
 
-$("removeCover").addEventListener("click",()=>{
-
-  showCover("","");
-
-});
+$("removeCover").addEventListener("click",()=>{showCover("","");notify("Artwork removed.");});
 
 $("downloadCover").addEventListener("click",()=>{
 
-  if(!coverData){alert("Upload an album cover first.");return;}
+  if(!coverData)return notify("Choose an album cover first.");
 
-  const a=document.createElement("a");
-
-  a.href=coverData;
+  const a=document.createElement("a");a.href=coverData;
 
   a.download=safeFileName($("title").value)+"-cover.jpg";
 
-  document.body.appendChild(a);
-
-  a.click();
-
-  a.remove();
+  document.body.appendChild(a);a.click();a.remove();
 
 });
 
-function persist(){
-
-  try{
-
-    localStorage.setItem(STORE,JSON.stringify(projects));
-
-    renderSaved();
-
-    return true;
-
-  }catch(e){
-
-    alert("The browser ran out of storage. Try using a smaller cover image or remove old saved projects.");
-
-    return false;
-
-  }
-
-}
-
 function buildLocalSong(){
 
-  const s=settings();
-
-  const idea=s.topic || "a story waiting to be told";
-
-  const title=s.title;
+  const s=settings(),idea=s.topic||"a story waiting to be told";
 
   const isRap=/rap|hip.?hop/i.test(s.genre);
 
-  const isComedy=/comedy|funny|parody/i.test(s.genre+" "+s.mood);
+  const funny=/comedy|funny|parody/i.test(s.genre+" "+s.mood);
 
   const dark=/dark|angry|haunting|tragic/i.test(s.mood);
 
   const romantic=/love|romantic|sensual/i.test(s.mood);
 
-  const cleanIdea=idea.replace(/\s+/g," ").trim();
+  const opening=funny?"The whole thing started with a plan that made no sense,":
 
-  const intro="["+s.genre+" · "+s.mood+" · "+s.voice+"]";
+    dark?"There's a shadow in the room that knows the things I hide,":
 
-  const opening=isComedy
+    romantic?"The world fell out of focus when you looked into my eyes,":
 
-    ? "The whole thing started with a plan that made no sense,"
-
-    : dark
-
-    ? "There's a shadow in the room that knows the things I hide,"
-
-    : romantic
-
-    ? "The world fell out of focus when you looked into my eyes,"
-
-    : "I had a thousand things to say and nowhere left to hide,";
+    "I had a thousand things to say and nowhere left to hide,";
 
   const verse1=[
 
@@ -612,7 +1016,7 @@ function buildLocalSong(){
 
     "A half-forgotten memory, a question asking why,",
 
-    "And somewhere in the middle, I discovered what was true."
+    "And somewhere in the middle, I discovered something true."
 
   ];
 
@@ -672,125 +1076,71 @@ function buildLocalSong(){
 
   ];
 
-  const sections=["["+title+"]",intro,"[Song concept]\n"+cleanIdea];
+  const out=["["+s.title+"]","["+s.genre+" · "+s.mood+" · "+s.voice+"]","[Song concept]\n"+idea];
 
   if(s.structure==="Freestyle"){
 
-    sections.push("[Freestyle]\n"+(isRap?rap:verse1).join("\n")+"\n\n[Hook]\n"+chorus.join("\n"));
+    out.push("[Freestyle]\n"+(isRap?rap:verse1).join("\n")+"\n\n[Hook]\n"+chorus.join("\n"));
 
   }else if(s.structure==="Storytelling"){
 
-    sections.push("[Verse 1]\n"+verse1.join("\n"));
-
-    sections.push("[Verse 2]\n"+verse2.join("\n"));
-
-    sections.push("[Turning Point]\n"+bridge.join("\n"));
-
-    sections.push("[Ending]\n"+chorus.slice(0,2).join("\n"));
+    out.push("[Verse 1]\n"+verse1.join("\n"),"[Verse 2]\n"+verse2.join("\n"),"[Turning Point]\n"+bridge.join("\n"),"[Ending]\n"+chorus.slice(0,2).join("\n"));
 
   }else{
 
-    sections.push("[Verse 1]\n"+(isRap?rap.slice(0,4):verse1).join("\n"));
+    out.push("[Verse 1]\n"+(isRap?rap.slice(0,4):verse1).join("\n"));
 
-    sections.push("[Chorus]\n"+chorus.join("\n"));
+    out.push("[Chorus]\n"+chorus.join("\n"));
 
-    sections.push("[Verse 2]\n"+(isRap?rap.slice(4):verse2).join("\n"));
+    out.push("[Verse 2]\n"+(isRap?rap.slice(4):verse2).join("\n"));
 
-    sections.push("[Chorus]\n"+chorus.join("\n"));
+    out.push("[Chorus]\n"+chorus.join("\n"));
 
     if(s.structure!=="Verse / Chorus / Verse / Chorus"){
 
-      sections.push("[Bridge]\n"+bridge.join("\n"));
-
-      sections.push("[Final Chorus]\n"+chorus.join("\n"));
+      out.push("[Bridge]\n"+bridge.join("\n"),"[Final Chorus]\n"+chorus.join("\n"));
 
     }
 
-    if(s.structure==="Intro / Verse / Chorus / Verse / Chorus / Outro"){
+    if(s.structure==="Intro / Verse / Chorus / Verse / Chorus / Outro")
 
-      sections.push("[Outro]\nThe story doesn't end here.\nThere's another page to write.");
-
-    }
+      out.push("[Outro]\nThe story doesn't end here.\nThere's another page to write.");
 
   }
 
-  sections.push("[Writer's note]\nDevelop the verses with specific details from your idea: "+cleanIdea);
+  out.push("[Writer's note]\nDevelop the verses with specific details from your idea: "+idea);
 
-  return sections.join("\n\n");
-
-}
-
-/*
-
-AI backend contract:
-
-POST JSON:
-
-{
-
-  "task": "write_song" or "revise_song",
-
-  "settings": {...},
-
-  "idea": "...",
-
-  "instruction": "...",
-
-  "currentLyrics": "..."
+  return out.join("\n\n");
 
 }
-
-Expected response: {"lyrics":"...","message":"..."}
-
-A plain-text response is also accepted.
-
-Do not expose private API keys in this public website.
-
-*/
 
 async function callAI(task,instruction){
 
-  const endpoint=$("endpoint").value.trim();
-
-  if(!endpoint)return null;
+  const endpoint=$("endpoint").value.trim();if(!endpoint)return null;
 
   const s=settings();
 
   const response=await fetch(endpoint,{
 
-    method:"POST",
+    method:"POST",headers:{"Content-Type":"application/json"},
 
-    headers:{"Content-Type":"application/json"},
-
-    body:JSON.stringify({
-
-      task,
-
-      settings:s,
-
-      idea:s.topic,
-
-      instruction:instruction || "",
-
-      currentLyrics:$("lyrics").value
-
-    })
+    body:JSON.stringify({task,settings:s,idea:s.topic,instruction:instruction||"",currentLyrics:$("lyrics").value})
 
   });
 
   if(!response.ok)throw new Error("AI backend returned HTTP "+response.status);
 
-  const type=response.headers.get("content-type") || "";
+  const type=response.headers.get("content-type")||"";
 
   if(type.includes("application/json")){
 
     const data=await response.json();
 
-    const lyrics=data.lyrics || data.text || data.output || data.response;
+    const lyrics=data.lyrics||data.text||data.output||data.response;
 
-    if(!lyrics)throw new Error("The AI backend did not return lyrics or text.");
+    if(!lyrics)throw new Error("The backend did not return lyrics or text.");
 
-    return {lyrics:String(lyrics),message:data.message || "Your song is ready."};
+    return {lyrics:String(lyrics),message:data.message||"Your song is ready."};
 
   }
 
@@ -806,19 +1156,9 @@ async function generate(){
 
   const s=settings();
 
-  if(!s.topic){
+  if(!s.topic){go("lab");$("topic").focus();return notify("Tell Thor your idea first.");}
 
-    $("topic").focus();
-
-    alert("Tell Thor your idea first. It can be a single sentence or a detailed story.");
-
-    return;
-
-  }
-
-  $("generate").disabled=true;
-
-  $("generate").textContent="Writing...";
+  const btn=$("generate");btn.disabled=true;btn.textContent="ϟ Creating magic...";
 
   setStatus("WORKING",false);
 
@@ -830,61 +1170,51 @@ async function generate(){
 
       $("lyrics").value=result.lyrics;
 
-      addMessage(result.message || "Your song has been written.","bot");
-
-      setStatus("AI CONNECTED",true);
+      addMessage(result.message,"bot");setStatus("AI CONNECTED",true);
 
     }else{
 
       $("lyrics").value=buildLocalSong();
 
-      addMessage("I've created a local draft around your idea. Local mode uses writing patterns rather than a real AI model, so it won't fully interpret every detail yet. Connect a compatible AI backend for deeper, original songwriting.","bot");
+      addMessage("Your local draft is ready. Local mode uses writing patterns rather than a real AI model, so it cannot fully interpret every detail of your idea. Connect an AI backend for deeper original songwriting.","bot");
 
       setStatus("LOCAL MODE",true);
 
     }
 
+    $("titleDisplay").value=s.title;
+
+    go("lyrics");
+
   }catch(e){
 
-    addMessage("I couldn't reach the AI backend: "+e.message+". Check the endpoint and try again. Your local draft is still available if you generate in local mode.","bot");
+    addMessage("I couldn't reach the AI backend: "+e.message+". Check your connection. Your existing lyrics have not been deleted.","bot");
 
-    setStatus("AI CONNECTION ERROR",false);
+    setStatus("CONNECTION ERROR",false);go("chat");
 
-  }finally{
-
-    $("generate").disabled=false;
-
-    $("generate").textContent="ϟ Turn my idea into a song";
-
-  }
+  }finally{btn.disabled=false;btn.textContent="ϟ Turn my idea into a song";}
 
 }
 
 async function respond(text){
 
-  const q=(text || "").trim();
-
-  if(!q)return;
+  const q=(text||"").trim();if(!q)return;
 
   addMessage(q,"user");
 
-  const oldLyrics=$("lyrics").value.trim();
+  const old=$("lyrics").value.trim();
 
   const isNew=/write (me )?(a )?song|generate|start (a )?song|turn .*into a song/i.test(q);
 
-  if(!oldLyrics || isNew){
+  if(!old||isNew){
 
     if(!$("topic").value.trim())$("topic").value=q;
 
-    await generate();
-
-    return;
+    await generate();return;
 
   }
 
-  $("send").disabled=true;
-
-  $("send").textContent="...";
+  $("send").disabled=true;$("send").textContent="...";
 
   try{
 
@@ -892,31 +1222,17 @@ async function respond(text){
 
     if(result){
 
-      $("lyrics").value=result.lyrics;
+      $("lyrics").value=result.lyrics;addMessage(result.message,"bot");setStatus("AI CONNECTED",true);
 
-      addMessage(result.message || "I've revised your song according to your instructions.","bot");
-
-      setStatus("AI CONNECTED",true);
-
-    }else{
-
-      localEdit(q);
-
-    }
+    }else{localEdit(q);}
 
   }catch(e){
 
-    addMessage("The AI request failed: "+e.message+". Your existing lyrics have not been deleted.","bot");
+    addMessage("The AI request failed: "+e.message+". Your existing lyrics are still here.","bot");
 
-    setStatus("AI CONNECTION ERROR",false);
+    setStatus("CONNECTION ERROR",false);
 
-  }finally{
-
-    $("send").disabled=false;
-
-    $("send").textContent="Send ↗";
-
-  }
+  }finally{$("send").disabled=false;$("send").textContent="Send ↗";}
 
 }
 
@@ -924,43 +1240,39 @@ function localEdit(q){
 
   const lower=q.toLowerCase();
 
-  const lyrics=$("lyrics").value;
-
   if(/genre|sound like|switch to|make it (country|rock|rap|pop|metal|jazz)/i.test(q)){
 
     $("genre").value=q;
 
-    addMessage("I've updated the genre/style field. Generate a new draft to apply the change in local mode.","bot");
+    addMessage("I've updated the style field. Generate a new draft to apply it in local mode.","bot");
 
   }else if(/darker|make it dark/i.test(lower)){
 
     $("mood").value="Dark";
 
-    addMessage("Mood changed to Dark. Generate a new draft to apply the change in local mode.","bot");
+    addMessage("Mood changed to Dark. Generate a new draft to apply it in local mode.","bot");
 
   }else if(/rewrite|replace|change the whole song|start over|new version/i.test(lower)){
 
-    $("topic").value=$("topic").value || q;
+    $("topic").value=$("topic").value||q;$("lyrics").value=buildLocalSong();
 
-    $("lyrics").value=buildLocalSong();
-
-    addMessage("I've created a fresh local draft. For a rewrite that follows every detail of your instruction, connect an AI backend.","bot");
+    addMessage("I've made a fresh local draft. A connected AI backend is needed for a detailed rewrite.","bot");
 
   }else if(/title|name the song/i.test(lower)){
 
-    $("title").value=$("topic").value.trim().split(/\s+/).slice(0,5).join(" ") || "Untitled Song";
+    $("title").value=$("topic").value.trim().split(/\s+/).slice(0,5).join(" ")||"Untitled Song";
 
-    addMessage("I've suggested a working title. You can edit it in Song settings.","bot");
+    $("titleDisplay").value=$("title").value;
 
-  }else if(/save/i.test(lower)){
+    addMessage("I've suggested a working title. You can change it in the Song Lab.","bot");
 
-    saveSong();
+  }else if(/save/i.test(lower)){saveSong();}
 
-  }else{
+  else{
 
     $("topic").value=($("topic").value+"\n\nRevision request: "+q).trim();
 
-    addMessage("I've added your instruction to the song idea so it stays with the project. Local mode cannot intelligently rewrite arbitrary lyrics; connect an AI backend for that. You can still edit the lyrics directly.","bot");
+    addMessage("I've added your instruction to the song idea. Local mode cannot intelligently rewrite arbitrary lyrics. Connect an AI backend for that, or edit the lyrics directly.","bot");
 
   }
 
@@ -968,41 +1280,13 @@ function localEdit(q){
 
 function saveSong(){
 
-  const text=$("lyrics").value.trim();
+  const text=$("lyrics").value.trim();if(!text)return notify("Write or generate lyrics before saving.");
 
-  if(!text){alert("Write or generate lyrics before saving.");return;}
+  if($("titleDisplay").value.trim())$("title").value=$("titleDisplay").value.trim();
 
-  const s=settings();
+  const s=settings(),id=currentId||(Date.now().toString(36)+Math.random().toString(36).slice(2,8));
 
-  const id=currentId || (Date.now().toString(36)+Math.random().toString(36).slice(2,8));
-
-  const item={
-
-    id,
-
-    title:s.title,
-
-    genre:s.genre,
-
-    mood:s.mood,
-
-    voice:s.voice,
-
-    structure:s.structure,
-
-    intensity:s.intensity,
-
-    topic:s.topic,
-
-    lyrics:text,
-
-    coverData,
-
-    coverName,
-
-    updated:Date.now()
-
-  };
+  const item={id,...s,lyrics:text,coverData,coverName,updated:Date.now()};
 
   const i=projects.findIndex(p=>p.id===id);
 
@@ -1010,133 +1294,147 @@ function saveSong(){
 
   currentId=id;
 
-  if(persist())addMessage("Saved “"+item.title+"” with its lyrics and "+(coverData?"album artwork.":"current settings."));
+  if(persist()){
 
-}
+    notify("Song saved to your Vault ♡");
 
-function renderSaved(){
-
-  const root=$("saved");
-
-  root.replaceChildren();
-
-  if(!projects.length){
-
-    const empty=document.createElement("p");
-
-    empty.className="muted";
-
-    empty.textContent="Your saved songs will appear here.";
-
-    root.appendChild(empty);
-
-    return;
+    renderHome();
 
   }
 
-  projects.forEach(p=>{
+}
 
-    const b=document.createElement("button");
+function persist(){
 
-    b.className="saved-item"+(p.id===currentId?" active":"");
+  try{
 
-    b.textContent=(p.coverData?"🖼 ":"")+(p.title || "Untitled Song");
+    localStorage.setItem(STORE,JSON.stringify(projects));
 
-    const small=document.createElement("small");
+    renderSaved();return true;
 
-    small.textContent=(p.genre || "Any genre")+" · "+new Date(p.updated).toLocaleDateString();
+  }catch(e){
 
-    b.appendChild(small);
+    notify("Storage is full. Try smaller covers or remove old projects.");return false;
 
-    b.addEventListener("click",()=>loadSong(p.id));
-
-    root.appendChild(b);
-
-  });
+  }
 
 }
 
 function loadSong(id){
 
-  const p=projects.find(x=>x.id===id);
-
-  if(!p)return;
+  const p=projects.find(x=>x.id===id);if(!p)return;
 
   currentId=p.id;
 
-  $("title").value=p.title || "";
+  $("title").value=p.title||"";
 
-  $("genre").value=p.genre || "Country";
+  $("titleDisplay").value=p.title||"";
 
-  $("mood").value=p.mood || "Emotional";
+  $("genre").value=p.genre||"Country";
 
-  $("voice").value=p.voice || "Male vocalist";
+  $("mood").value=p.mood||"Emotional";
 
-  $("structure").value=p.structure || "Full song";
+  $("voice").value=p.voice||"Male vocalist";
 
-  $("intensity").value=p.intensity || "Raw and honest";
+  $("structure").value=p.structure||"Full song";
 
-  $("topic").value=p.topic || "";
+  $("intensity").value=p.intensity||"Raw and honest";
 
-  $("lyrics").value=p.lyrics || "";
+  $("topic").value=p.topic||"";
 
-  showCover(p.coverData || "",p.coverName || "");
+  $("lyrics").value=p.lyrics||"";
 
-  renderSaved();
+  showCover(p.coverData||"",p.coverName||"");
 
-  addMessage("Loaded “"+p.title+"” with its saved lyrics and artwork.","bot");
+  go("lyrics");notify("Loaded "+(p.title||"your song"));
 
 }
 
-async function copyLyrics(){
+function renderSaved(){
 
-  const text=$("lyrics").value;
+  const root=$("saved"),query=($("vaultSearch").value||"").toLowerCase();
 
-  if(!text.trim()){alert("There are no lyrics to copy yet.");return;}
+  root.replaceChildren();
 
-  try{
+  const list=projects.filter(p=>(p.title+" "+p.genre+" "+p.topic).toLowerCase().includes(query));
 
-    await navigator.clipboard.writeText(text);
+  if(!list.length){
 
-    $("copy").textContent="Copied!";
+    const empty=document.createElement("div");empty.className="empty";
 
-    setTimeout(()=>$("copy").textContent="Copy lyrics",1500);
+    empty.innerHTML='<div class="emoji">🎵</div><h3>Your Vault is waiting</h3><p class="muted">Create a song in the Song Lab, then save it here.</p>';
 
-  }catch(e){
-
-    $("lyrics").focus();
-
-    $("lyrics").select();
-
-    alert("Your lyrics are selected. Use Copy from the iPhone selection menu.");
+    root.appendChild(empty);return;
 
   }
 
+  list.forEach(p=>{
+
+    const card=document.createElement("article");card.className="song-card";
+
+    if(p.coverData){
+
+      const img=document.createElement("img");img.className="song-cover";img.src=p.coverData;img.alt="Album artwork";
+
+      card.appendChild(img);
+
+    }else{
+
+      const cover=document.createElement("div");cover.className="song-cover";cover.textContent="♫";card.appendChild(cover);
+
+    }
+
+    const body=document.createElement("div");body.className="song-card-body";
+
+    const title=document.createElement("h3");title.textContent=p.title||"Untitled Song";
+
+    const info=document.createElement("p");info.textContent=(p.genre||"Any genre")+" · "+new Date(p.updated).toLocaleDateString();
+
+    const actions=document.createElement("div");actions.className="row";
+
+    const open=document.createElement("button");open.className="btn primary";open.textContent="Open";
+
+    open.addEventListener("click",()=>loadSong(p.id));
+
+    const del=document.createElement("button");del.className="btn";del.textContent="Delete";
+
+    del.addEventListener("click",()=>{
+
+      if(!confirm("Delete "+(p.title||"this song")+"?"))return;
+
+      projects=projects.filter(x=>x.id!==p.id);
+
+      if(currentId===p.id)currentId=null;
+
+      persist();renderHome();notify("Song deleted.");
+
+    });
+
+    actions.append(open,del);body.append(title,info,actions);card.appendChild(body);root.appendChild(card);
+
+  });
+
 }
 
-function downloadLyrics(){
+function renderHome(){
 
-  const text=$("lyrics").value;
+  $("songCount").textContent=projects.length;
 
-  if(!text.trim()){alert("Write or generate some lyrics first.");return;}
+  $("wordCount").textContent=projects.reduce((n,p)=>n+(p.lyrics||"").trim().split(/\s+/).filter(Boolean).length,0);
 
-  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+  const root=$("recentSongs");root.replaceChildren();
 
-  const url=URL.createObjectURL(blob);
+  if(!projects.length){root.textContent="Your next favorite song could start right here.";return;}
 
-  const a=document.createElement("a");
+  projects.slice(0,3).forEach(p=>{
 
-  a.href=url;
+    const b=document.createElement("button");b.className="btn full";b.style.textAlign="left";
 
-  a.download=safeFileName($("title").value)+".txt";
+    b.textContent=(p.coverData?"🖼 ":"🎵 ")+(p.title||"Untitled Song")+"  →";
 
-  document.body.appendChild(a);
+    b.addEventListener("click",()=>loadSong(p.id));root.appendChild(b);
 
-  a.click();
-
-  a.remove();
-
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
 
 }
 
@@ -1144,85 +1442,95 @@ $("generate").addEventListener("click",generate);
 
 $("send").addEventListener("click",()=>{
 
-  const v=$("prompt").value;
-
-  $("prompt").value="";
-
-  respond(v);
+  const q=$("prompt").value;$("prompt").value="";respond(q);
 
 });
 
 $("prompt").addEventListener("keydown",e=>{
 
-  if(e.key==="Enter"&&!e.shiftKey){
-
-    e.preventDefault();
-
-    $("send").click();
-
-  }
+  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("send").click();}
 
 });
 
-$("copy").addEventListener("click",copyLyrics);
-
-$("download").addEventListener("click",downloadLyrics);
-
 $("save").addEventListener("click",saveSong);
+
+$("copy").addEventListener("click",async()=>{
+
+  const text=$("lyrics").value;if(!text.trim())return notify("There are no lyrics to copy yet.");
+
+  try{await navigator.clipboard.writeText(text);notify("Lyrics copied!");}
+
+  catch(e){$("lyrics").focus();$("lyrics").select();notify("Select Copy from the iPhone menu.");}
+
+});
+
+$("download").addEventListener("click",()=>{
+
+  const text=$("lyrics").value;if(!text.trim())return notify("Write some lyrics first.");
+
+  const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+
+  a.href=url;a.download=safeFileName($("titleDisplay").value||$("title").value)+".txt";
+
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+});
 
 $("clear").addEventListener("click",()=>{
 
   if($("lyrics").value.trim()&&!confirm("Start a new song? Save your current work first if needed."))return;
 
-  currentId=null;
+  currentId=null;$("title").value="";$("titleDisplay").value="";
 
-  $("title").value="";
+  $("topic").value="";$("lyrics").value="";showCover("","");
 
-  $("topic").value="";
+  $("genre").value="Country";$("mood").value="Emotional";
 
-  $("lyrics").value="";
-
-  showCover("","");
-
-  $("genre").value="Country";
-
-  $("mood").value="Emotional";
-
-  $("voice").value="Male vocalist";
-
-  $("structure").value="Full song";
+  $("voice").value="Male vocalist";$("structure").value="Full song";
 
   $("intensity").value="Raw and honest";
 
-  addMessage("Fresh page, fresh idea. Tell me anything you want to turn into a song.","bot");
-
-  renderSaved();
+  notify("Fresh page. Fresh idea.");go("lab");
 
 });
 
-document.querySelectorAll("[data-idea]").forEach(b=>{
+document.querySelectorAll("[data-idea]").forEach(b=>b.addEventListener("click",()=>{
 
-  b.addEventListener("click",()=>{
+  $("topic").value=b.dataset.idea;
 
-    $("topic").value=b.dataset.idea;
+  $("genre").value=b.dataset.genre||"Country";
 
-    respond(b.dataset.idea);
+  $("mood").value=b.dataset.mood||"Emotional";
 
-  });
+  go("lab");notify("Your creative spark is ready!");
 
-});
+}));
+
+document.querySelectorAll("[data-field]").forEach(b=>b.addEventListener("click",()=>{
+
+  $(b.dataset.field).value=b.dataset.value;
+
+  document.querySelectorAll('[data-field="'+b.dataset.field+'"]').forEach(x=>x.classList.toggle("selected",x===b));
+
+}));
+
+document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{
+
+  go("chat");$("prompt").value=b.dataset.prompt;$("prompt").focus();
+
+}));
+
+$("vaultSearch").addEventListener("input",renderSaved);
+
+$("titleDisplay").addEventListener("input",()=>{$("title").value=$("titleDisplay").value;});
 
 $("testEndpoint").addEventListener("click",async()=>{
 
-  if(!$("endpoint").value.trim()){
+  if(!$("endpoint").value.trim())return notify("Enter your AI backend URL first.");
 
-    alert("Enter your AI backend URL first. Leave it blank for local mode.");
-
-    return;
-
-  }
-
-  $("testEndpoint").disabled=true;
+  const btn=$("testEndpoint");btn.disabled=true;btn.textContent="Checking...";
 
   try{
 
@@ -1230,41 +1538,37 @@ $("testEndpoint").addEventListener("click",async()=>{
 
     setStatus("AI CONNECTED",true);
 
-    addMessage("The AI endpoint responded successfully. Your backend is reachable and returned text.","bot");
+    addMessage("The AI endpoint responded successfully and returned text.","bot");
+
+    notify("AI backend responded successfully.");
 
   }catch(e){
 
     setStatus("CONNECTION FAILED",false);
 
-    addMessage("Connection test failed: "+e.message+". Check the URL, backend request format, and CORS settings.","bot");
+    addMessage("Connection test failed: "+e.message+". Check the URL, backend format and CORS settings.","bot");
 
-  }finally{
+    notify("Connection failed. Check the settings.");
 
-    $("testEndpoint").disabled=false;
-
-  }
+  }finally{btn.disabled=false;btn.textContent="Check AI connection";}
 
 });
 
 try{
 
-  const savedSettings=JSON.parse(localStorage.getItem(SETTINGS_STORE) || "{}");
+  const s=JSON.parse(localStorage.getItem(SETTINGS_STORE)||"{}");
 
-  if(savedSettings.endpoint)$("endpoint").value=savedSettings.endpoint;
+  if(s.endpoint)$("endpoint").value=s.endpoint;
 
 }catch(e){}
 
 $("endpoint").addEventListener("change",()=>{
 
-  try{
-
-    localStorage.setItem(SETTINGS_STORE,JSON.stringify({endpoint:$("endpoint").value.trim()}));
-
-  }catch(e){}
+  try{localStorage.setItem(SETTINGS_STORE,JSON.stringify({endpoint:$("endpoint").value.trim()}));}catch(e){}
 
 });
 
-renderSaved();
+renderSaved();renderHome();
 
 })();
 
